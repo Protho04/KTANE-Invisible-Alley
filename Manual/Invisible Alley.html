@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Invisible Alley — Keep Talking and Nobody Explodes Module</title>
+    <meta name="viewport" content="initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/font.css">
+    <script src="js/ktane-utils.js"></script>
+    <script src="js/ruleseed.js"></script>
+    <script src="js/jquery.3.7.0.min.js"></script>
+    <style>
+        table,
+        .dark table {
+            border: none;
+            width: 100%;
+        }
+
+        @media print,
+        screen and (min-width: 900px) {
+
+            table,
+            .dark table {
+                width: 68%;
+                position: relative;
+                float: right;
+                margin-left: 1cm;
+                margin-top: 0.5cm;
+            }
+
+            td {
+                position: relative;
+                overflow: hidden;
+                padding: 0;
+            }
+
+            td::before {
+                content: "";
+                display: block;
+                padding-top: 100%;
+            }
+
+            td>div {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+            }
+        }
+
+        td {
+            width: 30%;
+        }
+
+        td>div {
+            font-size: 75%;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            padding-left: 0.2cm;
+        }
+
+        .seeded td:not(.corner) {
+            background-color: #f002;
+        }
+    </style>
+    <script>
+        function setDefaultRules(r) {
+            setRules(r);
+        }
+
+        function setRules(r) {
+            let dirs = [["R", "D"], ["D", "L"], ["U", "R", "D"], ["U", "R", "D", "L"], ["D", "L"], ["U", "R"], ["U", "R", "L"], ["U", "L"]];
+            let dirs2 = [];
+            let conds = [
+                "> 0 vowels in SN",
+                "< 1 vowel in SN",
+                "> 1 unlit indicator",
+                "> 1 lit indicator",
+                "< 2 unlit indicators",
+                "< 2 lit indicators",
+                "> 2 indicators",
+                "< 3 indicators",
+                "> 0 D Batteries",
+                "> 0 AA Batteries",
+                "< 2 D Batteries",
+                "< 4 AA Batteries",
+                "> 3 Batteries",
+                "< 5 Batteries",
+                "> 0 Batteries",
+                "> 2 port plates",
+                "< 3 port plates",
+                "> 0 DVI-D ports",
+                "> 0 parallel ports",
+                "> 0 PS/2 ports",
+                "> 0 RJ-45 ports",
+                "> 0 serial ports",
+                "> 0 stereo RCA ports",
+                "> 0 empty port plates",
+                "< 1 empty port plates",
+            ];
+            // let conds = [...Array(20).keys()].map(i => (i + 1) + "");
+            let rule = 0;
+
+            for (i = 0; i < 8; i++) {
+                dirs[i] = r.shuffleArray(dirs[i]);
+                dirs2[i] = r.shuffleArray(dirs[i]);
+            }
+
+            conds = r.shuffleArray(conds);
+
+            [...Array(8).keys()].map(i => $(`#rule${i + 1}`).html(
+                dirs[i].map(r => r + " " + conds[rule++]).join("<br>") +
+                "<br>" +
+                dirs2[i].join("<br>")
+            ));
+
+            if (r.seed == 1)
+                $(".body").removeClass("seeded");
+            else
+                $(".body").addClass("seeded");
+        }
+    </script>
+</head>
+
+<body class="body">
+    <div class="section header">
+        <div class="page page-bg-01">
+            <div class="page-header">
+                <span class="page-header-doc-title">Keep Talking and Nobody Explodes Mod</span>
+                <span class="page-header-section-title">Invisible Alley</span>
+            </div>
+            <div class="page-content">
+                <img src="img/Component/Component.svg" class="diagram">
+                <h2>On the Subject of Invisible Alley</h2>
+                <p class="flavour-text">Sense and nonsense, I can't even see what you're talking about.</p>
+                <p class="appendix-reference">See Appendix BLANK in <a href="Blind%20Alley.html#app-blank-modules">Blind
+                        Alley</a> for blank modules identification.</p>
+                <p>The module appears blank, but has seven touch-sensitive regions laid out as in the following diagram
+                    (one of them is missing, but never the middle one).</p>
+                <table>
+                    <tr>
+                        <td>
+                            <div id="rule1">D &gt; 0 AA Batteries<br>R &lt; 5 Batteries<br>R<br>D</div>
+                        </td>
+                        <td>
+                            <div id="rule2">L &lt; 1 vowel in SN<br>D &lt; 2 lit indicators<br>D<br>L</div>
+                        </td>
+                        <td class="corner"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="rule3">R &gt; 0 stereo RCA ports<br>U &gt; 3 Batteries<br>D &gt; 1 unlit
+                                indicator<br>R<br>U<br>D</div>
+                        </td>
+                        <td>
+                            <div id="rule4">D &gt; 2 indicators<br>U &gt; 2 port plates<br>L &lt; 2 unlit
+                                indicators<br>R &lt; 1 empty port plates<br>L<br>U<br>D<br>R</div>
+                        </td>
+                        <td>
+                            <div id="rule5">L &lt; 2 D Batteries<br>D &gt; 1 lit indicator<br>L<br>D</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="rule6">U &gt; 0 PS/2 ports<br>R &gt; 0 D Batteries<br>R<br>U</div>
+                        </td>
+                        <td>
+                            <div id="rule7">R &gt; 0 serial ports<br>L &gt; 0 RJ-45 ports<br>U &gt; 0
+                                Batteries<br>R<br>U<br>L</div>
+                        </td>
+                        <td>
+                            <div id="rule8">L &lt; 4 AA Batteries<br>U &gt; 0 empty port plates<br>L<br>U</div>
+                        </td>
+                    </tr>
+                </table>
+                <p>Start in the missing region. Follow the rules in the current region repeatedly, moving between
+                    regions. If a region has already been visited or is not present on the module, skip any rules that
+                    bring you there. When you can no longer move, press the current region. Repeat the same steps
+                    (beginning at the region you just pressed), but treat any pressed regions as being absent from the
+                    module. Once no further presses are possible, the module will solve. An incorrect press will strike
+                    and reset your inputs; you will have to start over.</p>
+                <h4>How to read the table</h4>
+                <p>Go through the conditions in the current region in order, from top to bottom. The letter tells you
+                    which direction to move (<em>L</em>eft, <em>R</em>ight, <em>U</em>p, or <em>D</em>own), and the
+                    statement tells you when to move in that direction (only move if the condition applies). No
+                    condition means always.</p>
+            </div>
+            <div class="page-footer relative-footer">Page 1 of 1</div>
+        </div>
+    </div>
+</body>
+
+</html>
