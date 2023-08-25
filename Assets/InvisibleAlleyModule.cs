@@ -6,7 +6,7 @@ using KModkit;
 using UnityEngine;
 
 /// <summary>
-/// On the Subject of Sight Alley
+/// On the Subject of Invisible Alley
 /// Created by Protho04
 /// Assets by Timwi
 /// </summary>
@@ -74,7 +74,7 @@ public class InvisibleAlleyModule : MonoBehaviour
         int[] cumulativeOffsets = NewArray(0, 2, 4, 7, 11, 13, 15, 18);
 
         var rnd = RuleSeedable.GetRNG();
-        Debug.LogFormat("[Sight Alley #{0}] Using rule seed: {1}", _moduleId, rnd.Seed);
+        Debug.LogFormat("[Invisible Alley #{0}] Using rule seed: {1}", _moduleId, rnd.Seed);
 
         for (int i = 0; i < 8; i++)
         {
@@ -90,14 +90,14 @@ public class InvisibleAlleyModule : MonoBehaviour
         Regions[_missing].gameObject.SetActive(false);
         var names = new[] { "TL", "TM", "ML", "MC", "MR", "BL", "BM", "BR" };
         var dirnames = new Dictionary<char, string>() { { 'U', "up" }, { 'R', "right" }, { 'D', "down" }, { 'L', "left" } };
-        Debug.LogFormat("[Sight Alley #{0}] Missing region: {1}", _moduleId, names[_missing]);
+        Debug.LogFormat("[Invisible Alley #{0}] Missing region: {1}", _moduleId, names[_missing]);
 
         List<int> sol = new List<int>();
         bool[] used = Enumerable.Repeat(false, 8).ToArray();
         bool[] ignore = used.ToArray();
         ignore[_missing] = true;
         int cur = _missing;
-        Debug.LogFormat("[Sight Alley #{0}] Begin at {1}.", _moduleId, names[_missing]);
+        Debug.LogFormat("[Invisible Alley #{0}] Begin at {1}.", _moduleId, names[_missing]);
         while (true)
         {
             for (int dir = 0; dir < dirs[cur].Length; dir++)
@@ -108,7 +108,7 @@ public class InvisibleAlleyModule : MonoBehaviour
                     {
                         if (!used[Move(cur, dirs[cur][dir])])
                         {
-                            Debug.LogFormat("[Sight Alley #{0}] Rule {1} ({2} {3}) applies. Move {4} (to {5}).",
+                            Debug.LogFormat("[Invisible Alley #{0}] Rule {1} ({2} {3}) applies. Move {4} (to {5}).",
                                 _moduleId,
                                 dir + 1,
                                 dirs[cur][dir],
@@ -121,17 +121,17 @@ public class InvisibleAlleyModule : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogFormat("[Sight Alley #{0}] Rule {1} ({2} {3}) applies that region but has already been visited.", _moduleId, dir + 1, dirs[cur][dir], conditions[cumulativeOffsets[cur] + dir].Key);
+                            Debug.LogFormat("[Invisible Alley #{0}] Rule {1} ({2} {3}) applies that region but has already been visited.", _moduleId, dir + 1, dirs[cur][dir], conditions[cumulativeOffsets[cur] + dir].Key);
                         }
                     }
                     else
                     {
-                        Debug.LogFormat("[Sight Alley #{0}] Rule {1} ({2} {3}) applies but that region {4}.", _moduleId, dir + 1, dirs[cur][dir], conditions[cumulativeOffsets[cur] + dir].Key, _missing != Move(cur, dirs[cur][dir]) ? "has already been pressed" : "does not exist");
+                        Debug.LogFormat("[Invisible Alley #{0}] Rule {1} ({2} {3}) applies but that region {4}.", _moduleId, dir + 1, dirs[cur][dir], conditions[cumulativeOffsets[cur] + dir].Key, _missing != Move(cur, dirs[cur][dir]) ? "has already been pressed" : "does not exist");
                     }
                 }
                 else
                 {
-                    Debug.LogFormat("[Sight Alley #{0}] Rule {1} ({2} {3}) does not apply.", _moduleId, dir + 1, dirs[cur][dir], conditions[cumulativeOffsets[cur] + dir].Key);
+                    Debug.LogFormat("[Invisible Alley #{0}] Rule {1} ({2} {3}) does not apply.", _moduleId, dir + 1, dirs[cur][dir], conditions[cumulativeOffsets[cur] + dir].Key);
                 }
             }
             for (int dir = 0; dir < dirs2[cur].Length; dir++)
@@ -140,7 +140,7 @@ public class InvisibleAlleyModule : MonoBehaviour
                 {
                     if (!used[Move(cur, dirs2[cur][dir])])
                     {
-                        Debug.LogFormat("[Sight Alley #{0}] Rule {1} ({2}) applies. Move {3} (to {4}).",
+                        Debug.LogFormat("[Invisible Alley #{0}] Rule {1} ({2}) applies. Move {3} (to {4}).",
                             _moduleId,
                             dir + dirs2[cur].Length + 1,
                             dirs2[cur][dir],
@@ -152,19 +152,19 @@ public class InvisibleAlleyModule : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogFormat("[Sight Alley #{0}] Rule {1} ({2}) applies but that region has already been visited", _moduleId, dir + dirs2[cur].Length + 1, dirs2[cur][dir], dirnames[dirs2[cur][dir]]);
+                        Debug.LogFormat("[Invisible Alley #{0}] Rule {1} ({2}) applies but that region has already been visited", _moduleId, dir + dirs2[cur].Length + 1, dirs2[cur][dir], dirnames[dirs2[cur][dir]]);
                     }
                 }
                 else
                 {
-                    Debug.LogFormat("[Sight Alley #{0}] Rule {1} ({2}) applies but that region {3}.", _moduleId, dir + dirs2[cur].Length + 1, dirs2[cur][dir], _missing != Move(cur, dirs2[cur][dir]) ? "has already been pressed" : "does not exist");
+                    Debug.LogFormat("[Invisible Alley #{0}] Rule {1} ({2}) applies but that region {3}.", _moduleId, dir + dirs2[cur].Length + 1, dirs2[cur][dir], _missing != Move(cur, dirs2[cur][dir]) ? "has already been pressed" : "does not exist");
                 }
             }
             if (ignore[cur])
                 break;
             sol.Add(cur);
             ignore[cur] = transform;
-            Debug.LogFormat("[Sight Alley #{0}] No further movements can be made, so you must press {1} next.", _moduleId, names[cur]);
+            Debug.LogFormat("[Invisible Alley #{0}] No further movements can be made, so you must press {1} next.", _moduleId, names[cur]);
             var pressed = Enumerable.Range(0, 8).Where(i => ignore[i] && i != _missing).Select(i => names[i]).ToArray();
             string f = "";
             if (pressed.Length == 1)
@@ -173,15 +173,15 @@ public class InvisibleAlleyModule : MonoBehaviour
                 f = pressed[0] + " and " + pressed[1];
             else
                 f = pressed.Take(pressed.Length - 1).Join(", ") + ", and " + pressed.Last();
-            Debug.LogFormat("[Sight Alley #{0}] Begin again, starting at {1}. {2} doesn't exist and you treat {3} as though they don't either.", _moduleId, names[cur], names[_missing], f);
+            Debug.LogFormat("[Invisible Alley #{0}] Begin again, starting at {1}. {2} doesn't exist and you treat {3} as though they don't either.", _moduleId, names[cur], names[_missing], f);
             used = Enumerable.Repeat(false, 8).ToArray();
 
             cont:;
         }
-        Debug.LogFormat("[Sight Alley #{0}] No further movements can be made, but this is the same region you started at, so you're done.", _moduleId);
+        Debug.LogFormat("[Invisible Alley #{0}] No further movements can be made, but this is the same region you started at, so you're done.", _moduleId);
 
         _solution = sol.ToArray();
-        Debug.LogFormat("[Sight Alley #{0}] Must press these regions in order: {1}", _moduleId, _solution.Select(i => names[i]).Join(", "));
+        Debug.LogFormat("[Invisible Alley #{0}] Must press these regions in order: {1}", _moduleId, _solution.Select(i => names[i]).Join(", "));
 
         for (int i = 0; i < 8; i++)
         {
@@ -197,10 +197,10 @@ public class InvisibleAlleyModule : MonoBehaviour
                 if (_solution[_presses] == j)
                 {
                     _presses++;
-                    Debug.LogFormat("[Sight Alley #{0}] Correctly pressed {1}.", _moduleId, names[j]);
+                    Debug.LogFormat("[Invisible Alley #{0}] Correctly pressed {1}.", _moduleId, names[j]);
                     if (_presses == _solution.Length)
                     {
-                        Debug.LogFormat("[Sight Alley #{0}] That's every region. Solved!", _moduleId);
+                        Debug.LogFormat("[Invisible Alley #{0}] That's every region. Solved!", _moduleId);
                         Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
                         Module.HandlePass();
                         _isSolved = true;
@@ -208,7 +208,7 @@ public class InvisibleAlleyModule : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogFormat("[Sight Alley #{0}] Inorrectly pressed {1} (I was expecting {2}). Strike! Input reset.", _moduleId, names[j], names[_solution[_presses]]);
+                    Debug.LogFormat("[Invisible Alley #{0}] Inorrectly pressed {1} (I was expecting {2}). Strike! Input reset.", _moduleId, names[j], names[_solution[_presses]]);
                     _presses = 0;
                     Module.HandleStrike();
                 }
@@ -253,7 +253,7 @@ public class InvisibleAlleyModule : MonoBehaviour
         {
             yield return null;
             var names = new[] { "TL", "TM", "ML", "MC", "MR", "BL", "BM", "BR" };
-            yield return "sendtochat {0}, the missing region on Sight Alley (!{1}) is " + names[_missing] + ".";
+            yield return "sendtochat {0}, the missing region on Invisible Alley (!{1}) is " + names[_missing] + ".";
             yield break;
         }
         var skip = split[0].Equals("press", StringComparison.InvariantCulture | StringComparison.CurrentCulture) ? 1 : 0;

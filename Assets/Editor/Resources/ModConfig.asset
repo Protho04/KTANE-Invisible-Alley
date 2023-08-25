@@ -21,6 +21,6 @@ MonoBehaviour:
 
 
     [url=https://github.com/Protho04/KTANE-Invisible-Alley]Source code[/url]'
-  version: 1.0
+  version: 1.1
   outputFolder: build
   previewImage: {fileID: 2800000, guid: bd5c1f4881f57d54481b44e4c8a7779a, type: 3}
